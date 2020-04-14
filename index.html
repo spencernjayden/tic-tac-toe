@@ -1,0 +1,103 @@
+<html>
+
+<head>
+    <title>Tic-Tac-Toe</title>
+    <script>
+        let piece = 'X';
+
+        function mark(evt) {
+            if (evt.target.innerHTML.length !== 0) {
+                return;
+            }
+            evt.target.innerHTML = piece;
+            piece = piece === 'X' ? 'O' : 'X';
+            const trs = document.getElementsByTagName('TR');
+            const data = Array.from(trs).map(x => Array.from(x.getElementsByTagName("TD")).map(x => x.innerHTML));
+            for (let x = 0; x < 3; x++) {
+                if (data[x][0].length > 0 && data[x][0] === data[x][1] && data[x][1] === data[x][2]) {
+                    alert(data[x][0] + ' you are the best!');
+                    reset();
+                    return;
+                }
+                if (data[0][x].length > 0 && data[0][x] === data[1][x] && data[1][x] === data[2][x]) {
+                    alert(data[0][x] + ' you are the best!');
+                    reset();
+                    return;
+                }
+            }
+            if (data[0][0].length > 0 && data[0][0] === data[1][1] && data[1][1] == data[2][2]) {
+                alert(data[0][0] + ' you are the best !');
+                reset();
+                return;
+            }
+            if (data[0][2].length > 0 && data[0][2] === data[1][1] && data[1][1] == data[2][0]) {
+                alert(data[0][2] + ' you are the best!');
+                reset();
+                return;
+            }
+            if (data.map(x => x.filter(y => y.length === 0).length === 0).filter(x => x === true).length === 3) {
+                alert('oops no one wins!');
+                reset();
+            }
+        }
+
+        function reset() {
+            const tds = document.getElementsByTagName('TD');
+            Array.from(tds).map(td => td.innerHTML = '');
+            piece = 'X';
+        }
+    </script>
+    <style>
+        table,
+        th,
+        td {
+            border: 0px solid aqua;
+            border-collapse: collapse;
+        }
+        
+        td {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+        }
+        
+        td.top-middle,
+        td.bottom-middle {
+            border-left: 1px solid red;
+            border-right: 1px solid blue;
+        }
+        
+        td.left-middle,
+        td.right-middle {
+            border-top: 1px solid red;
+            border-bottom: 1px solid blue;
+        }
+        
+        td.middle {
+            border: 1px solid aqua;
+        }
+    </style>
+</head>
+
+<body>
+    <button onClick="reset()">Reset</button>
+    <table border="0" onClick="mark(event)">
+        <tr>
+            <td></td>
+            <td class="top-middle"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="left-middle"></td>
+            <td class="middle"></td>
+            <td class="right-middle"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="bottom-middle"></td>
+            <td></td>
+        </tr>
+    </table>
+</body>
+
+</html>
